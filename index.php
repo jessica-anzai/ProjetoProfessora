@@ -22,6 +22,17 @@
 <body>
   <div class="container d-flex justify-content-center align-items-center vh-100">
     <form class="p-4 bg-white rounded shadow" style="width: 320px;">
+      <?php 
+        if(isset($_GET['cadastro'])){
+          $cadastro = $_GET['cadastro'];
+          if($cadastro){
+            echo "<p class='text-success'>Cadastro realizado com sucesso</p>";
+          }
+          else{
+            echo "<p class='text-success'>Erro ao realizar o cadastro!</p>";
+          }
+        }
+      ?>
       <h2 class="mb-4 text-success">Acesso ao Sistema</h2>
       <div class="mb-3">
         <label for="emailLogin" class="form-label">E-mail</label>

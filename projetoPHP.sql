@@ -18,10 +18,11 @@ USE `projetoPHP` ;
 -- Table `projetoPHP`.`Usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `projetoPHP`.`Usuario` (
-  `idUsuario` INT NOT NULL AUTO_INCREMENT,
-  `emailUsuario` VARCHAR(255) NOT NULL,
-  `senhaUsuario` TEXT NOT NULL,
-  PRIMARY KEY (`idUsuario`))
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(255) NOT NULL,
+  `senha` VARCHAR(255) NOT NULL,
+  `nome` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -29,9 +30,9 @@ ENGINE = InnoDB;
 -- Table `projetoPHP`.`Categoria`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `projetoPHP`.`Categoria` (
-  `idCategoria` INT NOT NULL AUTO_INCREMENT,
-  `nomeCategoria` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`idCategoria`))
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -39,15 +40,15 @@ ENGINE = InnoDB;
 -- Table `projetoPHP`.`Produto`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `projetoPHP`.`Produto` (
-  `idProduto` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `descricao` VARCHAR(255) NOT NULL,
-  `valorProduto` DECIMAL(8,2) NOT NULL,
-  `Categoria_idCategoria` INT NOT NULL,
-  PRIMARY KEY (`idProduto`),
-  INDEX `fk_Produto_Categoria_idx` (`Categoria_idCategoria` ASC),
+  `valor` DECIMAL(8,2) NOT NULL,
+  `idCategoria` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_Produto_Categoria_idx` (`idCategoria` ASC),
   CONSTRAINT `fk_Produto_Categoria`
-    FOREIGN KEY (`Categoria_idCategoria`)
-    REFERENCES `projetoPHP`.`Categoria` (`idCategoria`)
+    FOREIGN KEY (`idCategoria`)
+    REFERENCES `projetoPHP`.`Categoria` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

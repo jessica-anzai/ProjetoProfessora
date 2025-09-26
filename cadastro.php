@@ -1,3 +1,22 @@
+ <?php
+
+    if($_SERVER['REQUEST_METHOD']=='POST'){
+    require("conexao.php");
+    $nome = $_POST['nome'];
+    $email = $_POST['email'];
+    $senha = password_hash($_POST['senha'],PASSWORD_BCRYPT);
+
+    try{
+      $stmt = $pdo->prepare("INSERT INTO usuario(nome,email,senha) values(?,?,?)");
+      if($stmt->execute([$nome,$email,$senha])){
+      header("location: index.php?cadastro=true;"); exit;
+      }
+      else header("location: index.php?cadastro=false;"); exit;
+    } catch(Exception $e){
+      echo "Erro ao executar o comando SQL: " . $e->getMessage();
+    }}
+  ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -21,23 +40,19 @@
 </head>
 <body>
   <div class="container d-flex justify-content-center align-items-center vh-100">
-    <form class="p-4 bg-white rounded shadow" style="width: 320px;">
+    <form class="p-4 bg-white rounded shadow" style="width: 320px;" method="post">
       <h2 class="mb-4 text-success">Cadastro</h2>
       <div class="mb-3">
-        <label for="nomeCadastro" class="form-label">Nome completo</label>
-        <input type="text" class="form-control" id="nomeCadastro" placeholder="Digite seu nome" required />
+        <label for="nome" class="form-label">Nome completo</label>
+        <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome" required />
       </div>
       <div class="mb-3">
-        <label for="emailCadastro" class="form-label">E-mail</label>
-        <input type="email" class="form-control" id="emailCadastro" placeholder="Digite seu e-mail" required />
+        <label for="email" class="form-label">E-mail</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu e-mail" required />
       </div>
       <div class="mb-3">
-        <label for="senhaCadastro" class="form-label">Senha</label>
-        <input type="password" class="form-control" id="senhaCadastro" placeholder="Crie uma senha" required />
-      </div>
-      <div class="mb-3">
-        <label for="confirmaSenhaCadastro" class="form-label">Confirme a senha</label>
-        <input type="password" class="form-control" id="confirmaSenhaCadastro" placeholder="Repita a senha" required />
+        <label for="senha" class="form-label">Senha</label>
+        <input type="password" class="form-control" id="senha" name="senha" placeholder="Crie uma senha" required />
       </div>
       <button type="submit" class="btn btn-verde w-100 mb-3">Cadastrar</button>
       <div class="text-center">
@@ -45,5 +60,6 @@
       </div>
     </form>
   </div>
+ 
 </body>
 </html>
